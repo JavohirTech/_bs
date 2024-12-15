@@ -37,7 +37,7 @@ export function Navbar() {
                 })
               }
             </ul>
-            <div className="navbar-text d-flex ms-3 gap-2">
+            <div className="navbar-text d-flex flex-wrap ms-3 gap-2">
               <ExchangesBadge/>
               <DownloadTransactions/>
               <ImportTransactions/>
