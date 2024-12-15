@@ -1,6 +1,14 @@
 import {numberFormatter} from "../../helpers/numberFormatter.ts";
+import {Transaction} from "../../pages/TransactionsPage.tsx";
+import {FC} from "react";
 
-export const TransactionList = ({transactions, handleEdit, handleDelete}) => {
+interface TransactionListProps {
+  transactions: Transaction[];
+  handleEdit: (id: number) => void;
+  handleDelete: (id: number) => void;
+}
+
+export const TransactionList:FC<TransactionListProps> = ({transactions, handleEdit, handleDelete}) => {
   return (
       <div className="row">
         {transactions.map((transaction) => (

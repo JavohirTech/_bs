@@ -1,4 +1,23 @@
-export const TransactionFilters = ({
+import {FC} from "react";
+
+type AscDesc =  "asc" | "desc"
+
+interface TransactionFiltersProps {
+  sortOrder: string;
+  setSortOrder: (value: AscDesc) => void;
+  filters: {
+    startDate: string;
+    endDate: string;
+    category: string;
+    subCategory: string;
+    amount: string;
+  };
+  handleFilterChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  handleClearFilters: () => void;
+  isFiltered: string;
+}
+
+export const TransactionFilters:FC<TransactionFiltersProps> = ({
                                      sortOrder,
                                      setSortOrder,
                                      filters,
@@ -10,7 +29,7 @@ export const TransactionFilters = ({
       <div className="row mt-3">
         <div className="col-12 col-md-2 mb-3">
           <label>Vaqt:</label>
-          <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="form-select">
+          <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value as AscDesc)} className="form-select">
             <option value="">Barchasi</option>
             <option value="asc">Yangi</option>
             <option value="desc">Eski</option>

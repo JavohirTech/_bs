@@ -9,7 +9,7 @@ import {TransactionList} from "../components/transactions/TransactionList.tsx";
 import {TransactionFilters} from "../components/transactions/TransactionFilters.tsx";
 import {TransactionForm} from "../components/transactions/TransactionForm.tsx";
 
-interface Transaction {
+export interface Transaction {
   id: number;
   amount: string;
   category: string;
@@ -18,7 +18,7 @@ interface Transaction {
   description: string;
   type: string;
   currency: string;
-  convertedAmount: number;
+  convertedAmount?: number | undefined;
 }
 
 export const TransactionsPage = () => {
@@ -27,7 +27,7 @@ export const TransactionsPage = () => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState<Partial<Transaction>>({
-    id: undefined,
+    id: 0,
     amount: "",
     category: "",
     subCategory: "",
@@ -81,24 +81,51 @@ export const TransactionsPage = () => {
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const exchangeRate = exchangesData ? exchangesData[formData.currency!] : 1;
-    const convertedAmount = parseFloat(formData.amount!) * exchangeRate;
+    const exchangeRate = exchangesData?.[formData.currency!] ?? 1;
+    const convertedAmount = parseFloat(formData.amount || "0") * exchangeRate;
 
     if (formData.id) {
       const updatedTransactions = transactions.map((transaction) =>
-          transaction.id === formData.id ? {...formData, convertedAmount} : transaction
-      );
+          transaction.id === formData.id
+              ? {
+                ...transaction,
+                ...formData,
+                id: transaction.id,
+                convertedAmount,
+                amount: formData.amount || transaction.amount,
+                category: formData.category || transaction.category,
+                subCategory: formData.subCategory || transaction.subCategory,
+                createdAt: formData.createdAt || transaction.createdAt,
+                description: formData.description || transaction.description,
+                type: formData.type || transaction.type,
+                currency: formData.currency || transaction.currency
+              }
+              : transaction
+      ) as Transaction[];
+
       setTransactions(updatedTransactions);
       localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
     } else {
-      const newTransaction = {...formData, id: Date.now(), convertedAmount};
+      const newTransaction: Transaction = {
+        id: Date.now(),
+        convertedAmount,
+        amount: formData.amount || "",
+        category: formData.category || "income",
+        subCategory: formData.subCategory || "",
+        createdAt: formData.createdAt || new Date().toISOString(),
+        description: formData.description || "",
+        type: formData.type || "income",
+        currency: formData.currency || "UZS"
+      };
+
       const updatedTransactions = [...transactions, newTransaction];
       setTransactions(updatedTransactions);
       localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
     }
+
     setIsModalOpen(false);
     setFormData({
-      id: undefined,
+      id: 0,
       amount: "",
       category: "",
       subCategory: "",
@@ -153,7 +180,7 @@ export const TransactionsPage = () => {
               className="btn btn-primary text-white"
               onClick={() => {
                 setFormData({
-                  id: undefined,
+                  id: 0,
                   amount: "",
                   category: "",
                   subCategory: "",

@@ -1,13 +1,22 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, FC} from 'react';
 import { motion } from 'framer-motion';
+import {Transaction} from "../../pages/TransactionsPage.tsx";
 
-export const TransactionForm = ({ formData, handleInputChange, handleFormSubmit, setIsModalOpen, exchangesData }) => {
+interface TransactionFormProps {
+  formData: Partial<Transaction>;
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => void;
+  handleFormSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  setIsModalOpen: (isOpen: boolean) => void;
+  exchangesData: Record<string, number> | undefined;
+}
+
+export const TransactionForm:FC<TransactionFormProps> = ({ formData, handleInputChange, handleFormSubmit, setIsModalOpen, exchangesData }) => {
   const [convertedAmount, setConvertedAmount] = useState(0);
 
   useEffect(() => {
-    const exchangeRate = exchangesData ? exchangesData[formData.currency] : 1;
-    setConvertedAmount(parseFloat(formData.amount) * exchangeRate);
-  }, [formData.amount, formData.currency, exchangesData]);
+    const exchangeRate = exchangesData?.[formData.currency!] ?? 1;
+    setConvertedAmount(parseFloat(formData.amount || "0") * exchangeRate);
+    }, [formData.amount, formData.currency, exchangesData]);
 
   return (
     <motion.div
@@ -23,7 +32,7 @@ export const TransactionForm = ({ formData, handleInputChange, handleFormSubmit,
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">{formData.id ? "Kirim-chiqimni tahrirlash" : "Kirim-chiqim qo'shish"}</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setIsModalOpen(false)} aria-label="Close">
+            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" onClick={() => setIsModalOpen(false)}>
             </button>
           </div>
           <div className="modal-body">
