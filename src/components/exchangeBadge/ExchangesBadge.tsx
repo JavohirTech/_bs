@@ -1,10 +1,10 @@
-import  {useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {useQuery} from "react-query";
 import {getExchanges} from "../../services/exchangesSvc.ts";
 import {queryCacheOptions} from "../../mock/cacheOptions.ts";
 
 export const ExchangesBadge = () => {
-  const { data: exchangesData, isLoading, isError } = useQuery("getExchanges", getExchanges, {...queryCacheOptions});
+  const {data: exchangesData, isLoading, isError} = useQuery("getExchanges", getExchanges, {...queryCacheOptions});
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ export const ExchangesBadge = () => {
     return () => clearInterval(interval);
   }, [exchangesData]);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>Failed to load exchange rates</div>;
+  if (isLoading) return <div>Yuklanmoqda...</div>;
+  if (isError) return <div>Xatolik</div>;
 
   const currencyEntries = Object.entries(exchangesData);
   const [currentCurrency, currentRate] = currencyEntries[currentIndex] || [];

@@ -17,7 +17,7 @@ export const ArchivedTransactionsPage = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [transactionToDelete, setTransactionToDelete] = useState<number | null>(null);
 
-  // Load archived transactions from localStorage on component mount
+
   useEffect(() => {
     const savedArchivedTransactions = JSON.parse(localStorage.getItem("archivedTransactions") || "[]");
     setArchivedTransactions(savedArchivedTransactions);

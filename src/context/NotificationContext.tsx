@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, {createContext, useContext, useState, ReactNode} from 'react';
 import {Notification} from "../components/notification/Notification.tsx";
 
 interface INotification {
@@ -9,7 +9,7 @@ interface INotification {
 
 interface NotificationContextType {
   notification: INotification | null;
-  showNotification: (title?: string| number, message?: string| number, status?: "success" | "warning" | "error") => void;
+  showNotification: (title?: string | number, message?: string | number, status?: "success" | "warning" | "error") => void;
   hideNotification: () => void;
 }
 
@@ -23,11 +23,11 @@ export const useNotification = () => {
   return context;
 };
 
-export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const NotificationProvider: React.FC<{ children: ReactNode }> = ({children}) => {
   const [notification, setNotification] = useState<INotification | null>(null);
 
-  const showNotification = (title?: string|number, message?: string| number, status?: "success" | "warning" | "error") => {
-    setNotification({ status, title, message });
+  const showNotification = (title?: string | number, message?: string | number, status?: "success" | "warning" | "error") => {
+    setNotification({status, title, message});
   };
 
   const hideNotification = () => {
@@ -36,9 +36,9 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
 
 
   return (
-      <NotificationContext.Provider value={{ notification, showNotification, hideNotification }}>
+      <NotificationContext.Provider value={{notification, showNotification, hideNotification}}>
         {children}
-        {notification && <Notification notification={notification} onHide={hideNotification} />}
+        {notification && <Notification notification={notification} onHide={hideNotification}/>}
       </NotificationContext.Provider>
   );
 };
