@@ -1,0 +1,76 @@
+
+$primary: #007bff;
+$secondary: #ffc107;
+$success: #28a745;
+$info: #17a2b8;
+$warning: #ffc107;
+$danger: #e63946;
+
+
+$theme-colors: (
+        "primary": $success,
+        "secondary": $secondary,
+        "success": $success,
+        "info": $info,
+        "warning": $warning,
+        "danger": $danger
+);
+
+
+$border-radius-custom: 0.75rem;
+
+$shadow-light: 0 2px 4px rgba(0, 0, 0, 0.1);
+$shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.15);
+$shadow-heavy: 0 8px 10px rgba(0, 0, 0, 0.2);
+
+@import "/node_modules/bootstrap/scss/functions";
+@import "/node_modules/bootstrap/scss/variables";
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+
+@each $color, $value in $theme-colors {
+
+  .text-#{$color} {
+    color: $value !important;
+  }
+
+
+  .bg-#{$color}-subtle {
+    background-color: rgba($value, 0.1) !important;
+  }
+
+
+  .bg-gradient-#{$color} {
+    background: linear-gradient(to bottom left, lighten($value, 10%), darken($value, 10%)) !important;
+    color: #fff;
+  }
+}
+
+
+.btn,
+.input-group-text,
+.form-control,
+.form-select,
+.card {
+  border-radius: $border-radius-custom !important;
+}
+
+
+.btn:hover,
+.btn:focus,
+.card:hover,
+.card:focus {
+  box-shadow: $shadow-medium !important;
+}
+
+
+.btn:active,
+.card:active {
+  box-shadow: $shadow-heavy !important;
+}
+
+
+.btn,
+.card {
+  box-shadow: $shadow-light !important;
+} 
