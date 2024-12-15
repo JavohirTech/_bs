@@ -123,6 +123,7 @@ export const ArchivedTransactionsPage = () => {
                 className="modal fade show d-block"
                 tabIndex={-1}
                 role="dialog"
+                style={{backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}

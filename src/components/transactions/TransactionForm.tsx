@@ -12,7 +12,7 @@ export const TransactionForm = ({ formData, handleInputChange, handleFormSubmit,
   return (
     <motion.div
       className={`modal fade show`}
-      style={{ display: 'block' }}
+      style={{ display: 'block',  backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
       tabIndex={-1}
       role="dialog"
       initial={{ opacity: 0, y: -50 }}
