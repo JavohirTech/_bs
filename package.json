@@ -20,7 +20,6 @@
     "react-dom": "^18.3.1",
     "react-query": "^3.39.3",
     "react-router-dom": "^7.0.2",
-    "react-transition-group": "^4.4.5",
     "sass": "^1.83.0",
     "vite-plugin-sass": "^0.1.0"
   },
